@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app 
+  xmlns="http://java.sun.com/xml/ns/javaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+  version="3.0">
+  
+ <!--  <filter>
+    <filter-name>RestrictionFilter</filter-name>
+    <filter-class>com.utc.filters.RestrictionFilter</filter-class>
+  </filter>
+  <filter>
+    <filter-name>AdminFilter</filter-name>
+    <filter-class>com.utc.filters.AdminFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>RestrictionFilter</filter-name>
+    <url-pattern>/restricted/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>AdminFilter</filter-name>
+    <url-pattern>/admin/*</url-pattern>
+  </filter-mapping> -->
+  <filter>
+    <filter-name>Set Character Encoding</filter-name>
+    <filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
+    <init-param>
+        <param-name>encoding</param-name>
+        <param-value>UTF-8</param-value>
+    </init-param>
+    <init-param>
+        <param-name>ignore</param-name>
+        <param-value>false</param-value>
+    </init-param>
+</filter>
+<filter-mapping>
+    <filter-name>Set Character Encoding</filter-name>
+    <url-pattern>/*</url-pattern>
+</filter-mapping>
+  
+ <listener>
+    <listener-class>com.utc.config.InitializeDAOFactory</listener-class>
+</listener>
+<servlet>
+    <servlet-name>Connexion</servlet-name>
+    <servlet-class>com.utc.servlets.Connexion</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Connexion</servlet-name>
+    <url-pattern>/connexion</url-pattern>
+  </servlet-mapping>
+<servlet>
+    <servlet-name>UserBook</servlet-name>
+    <servlet-class>com.utc.servlets.UserBook</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserBook</servlet-name>
+    <url-pattern>/userBook</url-pattern>
+  </servlet-mapping>
+
+ <!--  <servlet>
+    <servlet-name>CreateAccount</servlet-name>
+    <servlet-class>com.utc.servlets.CreateAccount</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CreateAccount</servlet-name>
+    <url-pattern>/create-account</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>WelcomePage</servlet-name>
+    <servlet-class>com.utc.servlets.WelcomePage</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>WelcomePage</servlet-name>
+    <url-pattern>/welcome-page</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>LogOut</servlet-name>
+    <servlet-class>com.utc.servlets.Logout</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LogOut</servlet-name>
+    <url-pattern>/restricted/logout</url-pattern>
+  </servlet-mapping> -->
+ 
+  
+</web-app>
