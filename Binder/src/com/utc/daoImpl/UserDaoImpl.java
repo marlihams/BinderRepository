@@ -98,7 +98,6 @@ public class UserDaoImpl implements UserDao {
 		} finally {
 			silentCloses(preparedStatement, connection, resultSet);
 		}
-
 		return user;
 	}
 	@Override
