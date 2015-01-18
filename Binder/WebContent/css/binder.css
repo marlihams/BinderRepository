@@ -1,4 +1,16 @@
+ .navigation :hover{
+ background-color:#8c7c7c !important;
 
+ cursor:pointer;
+ }
+ 
+.add{
+	margin-top:30px;
+	/* width:30px; */
+}
+.read:hover{
+	background-color:blue;
+}
 .supp{
 	width:400px;
 	margin-left:25%  !important;
@@ -34,7 +46,7 @@ input:disabled{
 display:inline-block;
 position:absolute;
  width: 80%;
- height:150%;
+ /*  height:180%;  */
 /* margin:auto; */
  left:10%;
  right:10%;
@@ -123,7 +135,9 @@ margin: 10px;
 .contenu
 {
 	margin-bottom: 10px;
-	overflow-x:scroll;
+	 overflow:hidden;
+	height:210px;
+	padding-left:25px;
 }
 .contenu img
 {
@@ -138,17 +152,12 @@ td + span {
 	margin-bottom:20px;
 }
 
+
 .imageAcceuil{
 	height:30px;
 }
 
-.acceuilForm{
 
- max-width: 30%; 
- min-width: 300px; 
- margin-left: 15px;
- margin-top:20px;
-}
 #recherche
 {
 	margin-left: 15%;
@@ -159,9 +168,13 @@ td + span {
 	
 }
 .newAccount{
-	margin-left:250px;
+	/* margin-left:250px; */
 	font-size:1.5em;
 	text-decoration:underline;
+	cursor:grab !important;
+}
+.newAccount:hover{
+	color:blue;
 }
 .boutton {
 position: absolute;
@@ -170,7 +183,7 @@ position: absolute;
 left: 45% !important;
 
 }
-.evaluation,.remove{
+.read{
 	
-	cursor:grab !important;
-}
+	cursor:pointer !important;
+} 

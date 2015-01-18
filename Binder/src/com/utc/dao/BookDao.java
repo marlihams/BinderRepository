@@ -15,5 +15,6 @@ public interface BookDao {
 	List<Notes> findLastNotes(int userId) throws DAOException;
 	List<Book> takeAllBooks() throws DAOException;	
 	List<Book> findBookLu(int userId)  throws DAOException ;
+	 void  addBookRead(String isbn,String mail)  throws DAOException ;
 	
 }

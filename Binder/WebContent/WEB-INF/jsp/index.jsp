@@ -32,16 +32,20 @@
 
 
 	<%-- <img alt="logo_binder" src="<c:url value="/images/logo_binder.png"/>" /> --%>
-	<div id="imageEntete">
+	<div id="imageBook" class="contenu">
+			
 				<img alt="Harry Potter" src="<c:url value="http://ecx.images-amazon.com/images/I/51MU5VilKpL.jpg" />"/>
 				<img alt="The Hobbit" src="<c:url value="http://ecx.images-amazon.com/images/I/61-pkWxzvbL.jpg"/>"/>
 				<img alt="H2G2" src="<c:url value="http://ecx.images-amazon.com/images/I/51RfX8a24oL.jpg" />" />
 				<img alt="Millenium" src="<c:url value="http://ecx.images-amazon.com/images/I/71LzPtVof3L.jpg"/>"/>
-
+				<img alt="anges-demons" src="<c:url value="/images/anges-demons.jpg" />"/>
+				<img alt="assasin" src="<c:url value="/images/assasin-creed.jpg" />"/>
+				<img alt="harry-potter" src="<c:url value="/images/harry-potter.jpg" />"/>
 		</div>
-	<div class="acceuilForm">
-		<div class="positionGauche"> 
-		<h1> Log in </h1>
+	<!-- <div class="acceuilForm"> -->
+		<div class="panel panel-default section">
+  		<div class="panel-heading">Log in </div>
+ 		 <div class="panel-body">
 		<form role="form" method="post" action="<c:url value="/connexion"/>">
 			<div class="form-group">
 				<c:if test="${!empty form.errors['email']}">
@@ -60,6 +64,9 @@
 				
 				<label for="email">Email addresse:</label> <input type="email" name="email" class="form-control" id="email">
 			</div>
+			<c:if test="${!empty form.errors['password']}">
+					<div class="alert alert-danger" role="alert">${form.errors['password'] }</div>
+				</c:if>
 			<div class="form-group">
 				<label for="pwd">Password:</label> <input type="password" name="password" class="form-control" id="pwd">
 			</div>
@@ -68,10 +75,11 @@
 			<!-- <button type="button" class="btn btn-default">Forgot password</button> -->
 		</form>
 		</div>
-		<div class="positionDroite">
-		<h1> New User</h1>
-			<a class="newAccount" href="#">Create account</a>
-			
+		</div>
+		
+		<div class="panel panel-default section">
+  		<div class="panel-heading"><span class="newAccount">Create account</span></div>
+ 		 <div class="panel-body">			
 			<form role="form" method="post" action="<c:url value="/inscription" />">
 			<c:if test="${form.errors.isEmpty() }">
 					<div class="alert alert-success" role="alert">Your inscription was successful.you will get a confirmation by email</div>
@@ -124,12 +132,11 @@
 			</div>
 			<button type="submit" class="btn btn-primary">Submit</button>
 			</div>
-			<%-- </c:otherwise>
-	</c:choose> --%>
 		</form>
 		</div>
 	</div>
 	</div>
+	<!-- </div> -->
 	<script
 		src="<c:url value="/js/jquery.js"/>"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->

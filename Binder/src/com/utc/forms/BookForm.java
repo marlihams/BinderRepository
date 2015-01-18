@@ -16,6 +16,7 @@ import com.utc.dao.*;
 import com.utc.exceptions.DAOException;
 
 public class BookForm {
+	public static String READ_BOOK="read";
 	public static String ADD_BOOK="addbook";
 	public static String FIELD_TITLE="title";
 	public static String FIELD_AUTHOR="author";
@@ -27,6 +28,7 @@ public class BookForm {
 	public static String FIELD_DAUTEUR="dAuteur";
 	public static String FIELD_RECOMMEND="recommend";
 	public static String FIELD_COMPLETED="completed";
+	public static final String EMAIL = "email";
 	public static String ACTION="action";
 	
 	public static final String EVALUATION= "evaluation";
@@ -240,14 +242,38 @@ public Book handleAddBook (HttpServletRequest request){
 }
 public void  upgradeBook (HttpServletRequest request) {
 
-	if (request.getParameter(FIELD_ISUBJECT)==null){
-		deleteBook(request);
+	System.out.println("je suis la ");
+	if (request.getParameter(FIELD_ISUBJECT)!=null){
+		evaluate(request);
+	}
+	else if (request.getParameter(READ_BOOK) != null){
+	
+	readBook(request);
+	
 	}
 	else{
 		
-		evaluate(request);
+		deleteBook(request);
+		
 	}				 
 }
+private void readBook(HttpServletRequest request) {
+	String  isbn = getFieldValue(request,FIELD_ISBN );
+	System.out.println( "the isbn is "+isbn);
+	System.out.println((String)request.getSession().getAttribute(EMAIL));
+	
+	try{
+	if (errors.isEmpty()) {
+		
+		bookDao.addBookRead(isbn,(String)request.getSession().getAttribute(EMAIL));
+	}
+}catch (DAOException e) {
+	result = "adding failure : an error has occured.contact the administrator .";
+	e.printStackTrace();
+}
+	
+}
+
 private void evaluate(HttpServletRequest request){
 	
 	Notes note=new Notes();
@@ -268,7 +294,7 @@ private void evaluate(HttpServletRequest request){
 public List<Book> lookForBook(HttpServletRequest request) {
 	
 	List<Book> books= new ArrayList<Book>();
-	
+	System.out.println("fuck what is going on ");
 		String champ=getFieldValue(request,ACTION);
 	 books=bookDao.findBookByIdOrNameOrISBNorAuthor(champ,getFieldValue(request,champ));
 	

@@ -13,6 +13,8 @@ public class DAOUtility {
 		for (int i =0;i<objects.length;i++){
 			preparedStatement.setObject(i+1, objects[i]);
 		}
+		
+		
 		return preparedStatement;
 	}
 	

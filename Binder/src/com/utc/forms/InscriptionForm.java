@@ -11,15 +11,19 @@ import com.sun.jmx.snmp.Timestamp;
 import com.utc.beans.User;
 import com.utc.exceptions.DAOException;
 import com.utc.dao.UserDao;
+import com.utc.daoImpl.AppConfigDAO;
 
 public class InscriptionForm {
 	private static final String FIELD_EMAIL = "email";
 	private static final String FIELD_PASSWORD = "password";
 	private static final String FIELD_CONFIRMATION = "confirmation";
 	private static final String FIELD_USERNAME = "username";
+	private static final String FIELD_USER_ID = "userId";
 	private static final String FIELD_ADDRESS = "addresse";
 	private static final String FIELD_PHONE = "phone";
-	private static final String ENCRYPTING_ALGO = "SHA-256";
+	private static final String FIELD_STATUS = "status";
+	private static final String ADD = "add";
+	private static final String ENCRYPTING_ALGO ="SHA-256";
 
 	private UserDao userDao;
 
@@ -67,7 +71,7 @@ public class InscriptionForm {
 		
 			newUser.setStatus("active");
 			if (errors.isEmpty()) {
-				userDao.create(newUser);
+				userDao.create(newUser,true);
 				result = "Inscription successfull.";
 			} else {
 				result = "Inscription failure.";
@@ -111,7 +115,6 @@ public class InscriptionForm {
 		user.setUsername(username);
 	}
 	private void validateEmail(String email) throws Exception {
-		System.out.println("je suis dans validate email");
 		if (email != null) {
 			if (!email.matches("^[a-z0-9._-]+@[a-z0-9._-]{2,}\\.[a-z]{2,4}$")) {
 				throw new Exception("Please enter a valid email");
@@ -173,6 +176,69 @@ public class InscriptionForm {
 		} else {
 			return value.trim();
 		}
+	}
+
+	public User infoNewUser(HttpServletRequest request) {
+		
+		String email =getFieldValue(request ,FIELD_EMAIL);
+		return  userDao.findByEmail(email,false);
+		 
+	}
+
+	public void acceptOrRejectUser(HttpServletRequest request) {
+		String email = getFieldValue(request, FIELD_EMAIL);
+		String username = getFieldValue(request, FIELD_USERNAME);
+		String addresse = getFieldValue(request, FIELD_ADDRESS);
+		String phone = getFieldValue(request, FIELD_PHONE);
+		String status = getFieldValue(request, FIELD_STATUS);
+		
+		if (request.getParameter(ADD)!=null){
+			User user =userDao.findByEmail(email,false);
+		user.setAddresse(addresse);
+		user.setUsername(username);
+		user.setTelephone(phone);
+		user.setStatus(status);
+		// encoder le mot de passe et l'inscrire 
+		String password=user.getPassword();
+		System.out.println("your password is before encoding "+password);
+		 String encription=encryptPassword(password);
+		 user.setPassword(encription);
+		System.out.println("your password is after encoding"+user.getPassword());
+		
+			userDao.create(user,true);
+	
+			// envoi du mail
+			//sendEmail(user,password);
+		}
+		
+		userDao.deleteUser(email,false); // suppression de user dans la table inscription
+	}
+	private boolean sendEmail(User user,String password) {
+		
+		boolean success=false;
+		AppConfigDAO appconfig=new AppConfigDAO();
+		MailSendingManager mailMan=new MailSendingManager();
+		String subject="Your count is ready";
+		String message="<p>welcome on board Mr/Ms"+ user.getUsername()+"!!!! you count has been created.<p> your login is<strong> "+user.getEmail()+"</strong> and your  password is <strong> "+password+"</strong> go to the <a href='http://localhost.utc.fr:8080/Binder/connexion'>Lets read together </a></p>";
+		System.out.println(message);
+		try{
+			mailMan.sendMail("mohamedmadioud@gmail.com",subject,message);
+			success=true;
+		}
+		catch(Exception e){
+			System.out.println("l'envoi du mail a échoué  consulte la fonction sendEmail de la classe InscriptionForm");
+			e.printStackTrace();
+			
+		}
+		return success;
+	}
+		
+	public static String encryptPassword(String password){
+		 ConfigurablePasswordEncryptor passwordEncryptor = new ConfigurablePasswordEncryptor();
+		    passwordEncryptor.setAlgorithm(ENCRYPTING_ALGO );
+		    passwordEncryptor.setPlainDigest( false );
+		    password= passwordEncryptor.encryptPassword(password);
+		   return password;
 	}
 
 }

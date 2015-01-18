@@ -42,9 +42,8 @@
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="#">Home</a></li>
-				<li><a href="my_books.jsp">My books</a></li>
-				<li><a href="evaluations.jsp">My evaluations</a></li>
-				<li><a href="my_matches.jsp">My matches</a></li>
+				<li><a href="<c:url value="/userBook" />">book Handler</a></li>
+				<li><a href="#">My matches</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 
@@ -56,9 +55,7 @@
 						class="caret"></span>
 				</a>
 					<ul class="dropdown-menu" role="menu">
-						<li><a href="#">My profile</a></li>
-						<li><a href="#">Security details</a></li>
-						<li><a href="#">Other settings</a></li>
+						<li><a href="<c:url value="/Binder/userProfile" />">My profile</a></li>
 						<li class="divider"></li>
 						<li><a href="#">Disconnect</a></li>
 					</ul>
@@ -72,16 +69,14 @@
 	<div id="overview">
 	<h1>Overview</h1>
 		<div id="imageBook" class="contenu">
-			<a href="<c:url value="/userBook"/>" > 
-				<div id="cover_book_plus">
-					<span id="plus">+</span>
-				</div>
-			</a>
+			
 				<img alt="Harry Potter" src="<c:url value="http://ecx.images-amazon.com/images/I/51MU5VilKpL.jpg" />"/>
 				<img alt="The Hobbit" src="<c:url value="http://ecx.images-amazon.com/images/I/61-pkWxzvbL.jpg"/>"/>
 				<img alt="H2G2" src="<c:url value="http://ecx.images-amazon.com/images/I/51RfX8a24oL.jpg" />" />
 				<img alt="Millenium" src="<c:url value="http://ecx.images-amazon.com/images/I/71LzPtVof3L.jpg"/>"/>
-
+				<img alt="anges-demons" src="<c:url value="/images/anges-demons.jpg" />"/>
+				<img alt="assasin" src="<c:url value="/images/assasin-creed.jpg" />"/>
+				<img alt="harry-potter" src="<c:url value="/images/harry-potter.jpg" />"/>
 		</div>
 		<p id="infoAcceuil">
 		Welcome on Binder, <strong><em><c:out value="${sessionScope.username}" /></em></strong>
@@ -107,7 +102,7 @@
 		    
 		 </div>
 		<h3>My Books read</h3>
-		<table data-toggle="table">
+		<table  class="table" data-toggle="table">
 			<thead>
 				<tr>
 					<th data-field="Title">Title</th>
@@ -124,14 +119,13 @@
 				<td class="isbn"><c:out value="${book.ISBN}"/></td>
 				<td class="auteur"><c:out value="${book.auteur}"/></td>
 				<td class="genre"><c:out value="${book.genre}"/></td>
-				<td class="remove"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></td>
+				<td class="remove"><button	class="btn btn-danger">Remove</button></td>
 			</tr>
 			</c:forEach>
 			</tbody>
-			
 		</table>
 		<h3>My valued Books</h3>
-		<table data-toggle="table">
+		<table class="table" data-toggle="table">
 			<thead>
 				<tr>
 					<th data-field="Title">Title</th>
@@ -147,6 +141,7 @@
 				</tr>
 			</thead>
 			<tbody>
+			<%-- <c:out value="${note.completed}" />--%>
 				<c:forEach items="${evaluation}" var="note">
 			<tr class="cibleEvaluation">
 				<td class="title"><c:out value="${note.booktitle}"/></td>
@@ -157,20 +152,26 @@
 				<td class="decoration"><c:out value="${note.dEnd}" /></td>
 				<td class="decoration"><c:out value="${note.dAuteur}" /></td>
 				<td class="decoration"><c:out value="${note.recommend}" /></td>
-				<td class="decoration"><c:out value="${note.completed}" /></td>
+				<td class="decoration">
+				<c:forEach var="i" begin="1" end="${note.completed}"  step="1" > 
+				<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+				</c:forEach>
+				</td> 
+				
 				<td class="evaluation">
-				<a href="#" /><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+				<a href="#"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
 				</td>
 			</tr>
 			</c:forEach>
 			</tbody>
 		</table>
+		
 		 <!-- display the result of the search -->
 		 
 	 <div id="search">
 		<h3>my Recherche Result</h3>
 		
-		<table data-toggle="table" >
+		<table class="table" data-toggle="table"  >
 			<thead>
 				<tr>
 					<th data-field="Title">Title</th>
@@ -191,6 +192,7 @@
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="<c:url value="/js/bootstrap.min.js"/>"></script>
 	<script src="<c:url value="/js/bootstrap-table.min.js"/>"></script>
+	<script src="<c:url value="/js/pagination.js"/>"></script>
 	<script src="<c:url value="/js/binder.js"/>"></script>
 </body>
 </html>

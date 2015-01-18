@@ -70,12 +70,14 @@
 
 		<h1>Overview</h1>
 		<!-- <div id="imageBook" class="contenu"> -->
-		<div id="imageEntete">
+		<div id="imageBook" class="contenu">
 				<img alt="Harry Potter" src="<c:url value="http://ecx.images-amazon.com/images/I/51MU5VilKpL.jpg" />"/>
 				<img alt="The Hobbit" src="<c:url value="http://ecx.images-amazon.com/images/I/61-pkWxzvbL.jpg"/>"/>
 				<img alt="H2G2" src="<c:url value="http://ecx.images-amazon.com/images/I/51RfX8a24oL.jpg" />" />
 				<img alt="Millenium" src="<c:url value="http://ecx.images-amazon.com/images/I/71LzPtVof3L.jpg"/>"/>
-
+				<img alt="anges-demons" src="<c:url value="/images/anges-demons.jpg" />"/>
+				<img alt="assasin" src="<c:url value="/images/assasin-creed.jpg" />"/>
+				<img alt="harry-potter" src="<c:url value="/images/harry-potter.jpg" />"/>
 		</div>
 		<div > <!-- class="acceuilForm" -->
 		<p >
@@ -148,7 +150,7 @@
 					<td ><input type="text" value="<c:out value="${book.ISBN}"/>"   name="isbn" disabled /></td>
 			
 					<td>
-						<select class="form-control"  name="qWriting" class="note" >
+						<select class="form-control"  name="qWriting" class="note">
 							<option value="4">4</option>
 							<option value="3">3</option>
 							<option value="2">2</option>
@@ -222,6 +224,7 @@
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="<c:url value="/js/bootstrap.min.js"/>"></script>
 	<script src="<c:url value="/js/bootstrap-table.min.js"/>"></script>
+	
 	<script src="<c:url value="/js/test.js"/>"></script>
 </body>
 </html>

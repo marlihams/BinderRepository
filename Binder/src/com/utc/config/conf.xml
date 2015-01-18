@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+<EmailSettings>
+		<port>465</port>
+		<host>smtp.gmail.com</host>
+		<email>binder@gmail.com</email>
+		<password>binder</password>
+		<username>binder@gmail.com</username>
+		<protocol>smtp</protocol>
+		
+</EmailSettings>
+</root>

@@ -49,7 +49,6 @@ public class UserProfile extends  HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		BookForm form = new BookForm(bookDao);
-		displayUserProfile(request);
 		
 		if (request.getParameter(ACTION)!=null){
 			
@@ -57,6 +56,7 @@ public class UserProfile extends  HttpServlet {
 		 	responseToAjax(response,books);
 		}
 		else{
+			displayUserProfile(request);
 			this.getServletContext().getRequestDispatcher(VIEW).forward(request, response);
 	}
 	}
@@ -100,7 +100,7 @@ public class UserProfile extends  HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//traite les données ensuite appel
-
+			
 			BookForm form = new BookForm(bookDao);
 			form.upgradeBook(request);  // function for deleting the book read or changing the valued book or displaying the search
 			displayUserProfile(request); 

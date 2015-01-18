@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
@@ -9,8 +9,9 @@
 <title>Binder – let's read!</title>
 
 <!-- Bootstrap -->
-<link href="../css/bootstrap.min.css" rel="stylesheet">
-<link href="../css/bootstrap-table.min.css" rel="stylesheet">
+<link href="<c:url value="/css/bootstrap.min.css"/>" rel="stylesheet">
+<link href="<c:url value="/css/bootstrap-table.min.css"/>" rel="stylesheet">
+<link href="<c:url value="/css/binder.css"/>" rel="stylesheet">
 
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -101,11 +102,37 @@
 			</tr>
 		</table>
 	</div>
+	<div style="margin: 10px;">
+		<h3><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Future User</h3>
+		<table data-toggle="table">
+			<thead>
+				<tr>
+					<th data-field="Username">Username</th>
+					<th data-field="E-mail address">E-mail address</th>
+					<th data-field="Info">View & Modify Info</th>
+				
+				</tr>
+			</thead>
+			<tbody>
+			<c:forEach items="${futureUser}" var="user" >
+			<tr class="newUser">
+				<td ><c:out value="${user.username}"/></td>
+				<td class="email"><c:out value="${user.email}"/></td>
+				<td><a  class="infoNewUser" href="#" ><button	class="btn btn-info">View Details</button></a></td>
+			</tr>
+			</c:forEach>
+			
+			</tbody>
+		</table>
+	</div>
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
-	<script src="../js/bootstrap.min.js"></script>
-	<script src="../js/bootstrap-table.min.js"></script>
+	<script src="<c:url value="/js/bootstrap.min.js"/>"></script>
+	<script src="<c:url value="/js/bootstrap-table.min.js"/>"></script>
+	<script src="<c:url value="/js/pagination.js"/>"></script>
+	<script src="<c:url value="/js/admin.js"/>"></script>
+	<script src="<c:url value="/js/binder.js"/>"></script>
 </body>
 </html>

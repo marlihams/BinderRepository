@@ -1,7 +1,8 @@
-
+var ADA='FUCK';
 $(function(){
 	
 
+	
 //$(".linkRecherche").on("click",function(e){
 //
 //var champ=$(this).text();
@@ -62,14 +63,24 @@ $(".cible").each(function(){
 
 }
 
+
+
+
+
+
+
 function searchingBook(){
+	
 	var $reSearch=$('#recherche');
+	
 		var tableau={};
 		 var $div=$('<div />'); 
 		var $cible=$(".linkRecherche");
 		var champ="";
-		$(".supp").remove(); // deleting the alert of the last reasearch
+		
+		
 		$cible.on("click",function(){ 
+			$(".supp").remove(); // deleting the alert of the last reasearch
 			
 			var action=$(this).text().trim();
 		
@@ -82,11 +93,26 @@ function searchingBook(){
 			}
 			else{
 				$div.attr("class","alert alert-danger alert-dismissible supp").attr("role","alert");
-				$div.html("<button type='button' class='close' data-dismiss='alert'aria-label='Close'>X</button>come on !!!! what do you want to look for");
+				$div.html("<button type='button' class='close supp' data-dismiss='alert'aria-label='Close'>X</button>come on !!!! what do you want to look for");
 				$reSearch.before($div);
+				displaytbody(false,$("#repSearch"));
 				
 			}
 		});
+}
+
+function displaytbody(bool,$div){
+	
+	
+	if (bool){
+		$div.show();
+	}
+	else{
+		
+		$tbody.hide();
+		$("#add").remove();
+	}
+	
 }
 
 // method succes for the calling of ajax
@@ -94,36 +120,80 @@ function succesPost(response){
 	
 	location.reload(true);
 }
+
 function responseGet(response){ //response  sous la forme de  ["title;isbn;genre;auteur"]
+	
 	var $table=$('#search');
+	var $tbody=$('#repSearch');
 	var $reSearch=$("#recherche");
 	var $div=$('<div />'); 
 	if (response=="false"){
-		$div.html("<button type='button' class='close' data-dismiss='alert'aria-label='Close'>X</button>come on !!!! what do you want to look for");
+		$div.attr("class","alert alert-info alert-dismissible supp").attr("role","alert");
+		$div.html("<button type='button' class='close supp' data-dismiss='alert' aria-label='Close' >X</button>this book doesn't exist");
 		$reSearch.before($div);
+		displaytbody(false,$table);
+		
 	}
-	else{
+	else{ // des résultats ont été trouvés  on les affiche avec le bouton  ajouter 
 		
-		var cible=response.split(",");
-		
-	var $tbody=$table.find('#repSearch');
-	
-	$table.show();
-	$tbody.empty();
-	$.each(cible,function(index,val){
-		var $tr=$('<tr/>');
-		$.each(val.split(";"),function(i,v){
+			$tbody.empty();
+			var cible=response.split(",");
 			
-			var $td=$('<td />').text(v);
-			$tr.append($td);
-		});
-		var $read=$('<td />').append($('<span class="glyphicon glyphicon-folder-open" aria-hidden="true" />'));
+			displaytbody(true,$table);
 		
-		$tbody.append($tr.append($read));
-	});	
+		$.each(cible,function(index,val){
+			var $tr=$('<tr class="cibleRead" />');
+			
+			$.each(val.split(";"),function(i,v){
+				
+				var $td=$('<td />').text(v);
+				$tr.append($td);
+			});
+			var $read=$('<td />').append($('<span class="glyphicon glyphicon-folder-open read" aria-hidden="true" />'));
+			
+			$tbody.append($tr.append($read));
+			
+			//activation de la lecture
+			readingBook($(".cibleRead"));
+			
+			
+			
+		});	
+		
+		var $link=$('<a id="add" />').attr("href","/Binder/userBook");
+		
+		var $boutonAjouter=$('<button />', {
 	
-	$(".linkRecherche").attr("href","#search");
+			type: "button", // identifiant de l'élément
+			"class":"btn btn-primary add",
+			name:"add",
+			text:"add New Book",
+			
+		});
+		$link.append($boutonAjouter);
+		$table.after($link); // ajout du bouton de redirection vers la page d'ajout d'un nouveau livre
+	
 	}
+}
+function readingBook($cibleRead){
+	var tableau={};
+	
+	$cibleRead.each(function(){ //cibleRead pour toutes les balises tr
+	
+		var $cible=$(this).find(".read"); // td de lecture  
+		
+		
+		$cible.on("click",function(){ 
+		
+//		 var tableau=sendData.formationBeanRequete($tdHavingdata);
+		 tableau["read"]=true;
+		 tableau["isbn"]=$cibleRead.find("td").eq(1).text().trim(); // recuperation du isbn
+		
+		 sendData.sendToServletByPost("/Binder/userProfile",tableau,succesPost);
+
+		});
+	});
+	
 	
 }
 
@@ -146,6 +216,13 @@ function evaluationBook() {
 removingBookLu();
 evaluationBook();
 searchingBook();
+
+
+$(".table").each(function(){
+	
+	
+	$(this).pagination();
+});
 
 
 })();

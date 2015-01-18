@@ -1,20 +1,22 @@
 package com.utc.forms;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 
 import com.utc.beans.Roles;
 import com.utc.beans.User;
 import com.utc.dao.UserDao;
 import com.utc.exceptions.DAOException;
 
+
 public class ConnexionForm {
+	
 	private static final String FIELD_EMAIL = "email";
 	private static final String FIELD_PASSWORD = "password";
+	private static final String ENCRYPTING_ALGO ="SHA-256";
 	private UserDao userDao;
 	private String result;
 	private Map<String, String> errors = new HashMap<String,String>();
@@ -57,15 +59,22 @@ public class ConnexionForm {
 		}
 
 		private void validationPassword( String motDePasse, String truePassword ) throws Exception {
-		  
-		        if ( !motDePasse.equals(truePassword ) ) {
+			 ConfigurablePasswordEncryptor passwordEncryptor = new ConfigurablePasswordEncryptor();
+			 passwordEncryptor.setAlgorithm(ENCRYPTING_ALGO );
+			    passwordEncryptor.setPlainDigest( false );
+//			 System.out.println(motDePasse);
+//			 System.out.println("truepassword "+truePassword);
+		        if (! passwordEncryptor.checkPassword(motDePasse,truePassword)) {
 		            throw new Exception( "wrong password" );
-		            
+		        }
+		        else
+		        {
+		        	 System.out.println("les mots de passe sont conformes");
 		        }
 		}
 	
-	private Boolean validateChamp( String email, String password ) throws Exception {
-	    if ( email == null || password == null){
+	private Boolean validateChamp( String champ1, String champ2 ) throws Exception {
+	    if ( champ1 == null || champ2== null){
 	    	throw new Exception( "Please enter an email and a password" );
 	    }else{
 	    	return true;
@@ -100,5 +109,11 @@ public class ConnexionForm {
 	    }
 	      	
 		return admin;
+	}
+	public List<User> getFutureUser(HttpServletRequest request) {
+		
+		List<User> users=userDao.findAllUsers(false);
+				
+		return users;
 	}
 }

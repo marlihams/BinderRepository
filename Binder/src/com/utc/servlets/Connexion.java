@@ -17,11 +17,13 @@ import com.utc.factory.*;
 //@WebServlet("/connexion")
 public class Connexion extends HttpServlet {
 	public static final String ATT_FORM = "form";
+	public static final String EMAIL = "email";
 	public static final String ADMIN= "admin";
 	public static final String USER_ID = "userId";
 	public static final String USERNAME = "username";
 	public static final String VIEW = "/WEB-INF/jsp/index.jsp";
 	private static final String ATT_DAO_FACTORY = "daofactory";
+
 	private static final long serialVersionUID = 1L;
     private UserDao userDao;   
     /**
@@ -55,6 +57,7 @@ public class Connexion extends HttpServlet {
 			int userId= user.getUserId().intValue();
 			session.setAttribute(USER_ID,userId);
 			session.setAttribute(USERNAME,user.getUsername());
+			session.setAttribute(EMAIL,user.getEmail());
 			session.setAttribute(ADMIN,admin);
 		}
 		
